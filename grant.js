@@ -64,6 +64,9 @@ function grant ({handler, ...rest}) {
   else if (handler === 'vercel') {
     return require('./lib/handler/vercel')(rest)
   }
+  else if (handler === 'custom') {
+    return require('./lib/handler/custom-handler')(rest)
+  }
 }
 
 grant.express = (options) => {
@@ -107,6 +110,11 @@ grant.fastify = (options) => {
 
 grant.curveball = (options) => {
   var handler = require('./lib/handler/curveball')
+  return options ? handler(options) : handler
+}
+
+grant.custom = (options) => {
+  var handler = require('./lib/handler/custom-handler')
   return options ? handler(options) : handler
 }
 
